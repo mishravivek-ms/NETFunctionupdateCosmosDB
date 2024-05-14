@@ -36,7 +36,7 @@ namespace latestEventHubNET
                     log.LogInformation($"C# Event Hub trigger function processed a message: {eventData.EventBody}");
                     output = await ProcessEvent(eventData, cosmosDBOutput);
                     //invoke InvokeStoredProcedure method
-                      await InvokeStoredProcedure("connection");
+                    await InvokeStoredProcedure(eventData.EventBody.ToString());
                     //print success message
                     log.LogInformation($"C# SUCCESS---------->: {output}");
                 }
@@ -83,7 +83,7 @@ namespace latestEventHubNET
 
                     Random random = new Random();
                     int randomId = random.Next(201, 300);
-
+                    // Replace the hardcoded value with the value from the EventData object
                     command.Parameters.Add(new SqlParameter("@ID", "3" + randomId));
                     command.Parameters.Add(new SqlParameter("@FirstName", "Hello3"));
                     command.Parameters.Add(new SqlParameter("@LastName", "World"));

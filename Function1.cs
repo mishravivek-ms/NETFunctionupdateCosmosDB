@@ -36,7 +36,7 @@ namespace latestEventHubNET
                     log.LogInformation($"C# Event Hub trigger function processed a message: {eventData.EventBody}");
                     output = await ProcessEvent(eventData, cosmosDBOutput);
                     //invoke InvokeStoredProcedure method
-                    await InvokeStoredProcedure("connection");
+                    await InvokeStoredProcedure(eventData.EventBody.ToString());
                     //print success message
                     log.LogInformation($"C# SUCCESS---------->: {output}");
                 }
@@ -84,7 +84,7 @@ namespace latestEventHubNET
                     // If your stored procedure has parameters, you can add them like this:
                     Random random = new Random();
                     int randomId = random.Next(1,100);
-
+                    // Replace the hardcoded value with the value from the EventData object
                     command.Parameters.Add(new SqlParameter("@ID", "1"+randomId));
                     command.Parameters.Add(new SqlParameter("@FirstName", "Hello1"));
                     command.Parameters.Add(new SqlParameter("@LastName", "World"));
